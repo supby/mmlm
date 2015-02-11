@@ -15,7 +15,7 @@ from sklearn.linear_model import LogisticRegression
 if __name__ == "__main__":
     print 'Load train dataset.'
     
-    dataset = pickle.load(open("../data/train_data.pkl", "rb"))
+    dataset = pickle.load(open("../localdata/train_data.pkl", "rb"))
 
     train_data = dataset[0]
     train_target = dataset[1]
@@ -40,4 +40,4 @@ if __name__ == "__main__":
     print(metrics.classification_report(y_test, y_predicted))
     
     print 'Save model.'    
-    pickle.dump(clf, open('../data/lr_model.pkl', 'wb'))
+    pickle.dump(clf, open('../localdata/lr_model.pkl', 'wb'))

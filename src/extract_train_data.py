@@ -35,7 +35,7 @@ def extractTrainDataRow(row, X, Y, teamStatsByKey):
 
 if __name__ == "__main__":    
     
-    teamStatsByKey = pickle.load(open('../data/teamStatsByKey.pkl', 'rb'))
+    teamStatsByKey = pickle.load(open('../localdata/teamStatsByKey.pkl', 'rb'))
     
     X = []
     Y = []
@@ -57,6 +57,6 @@ if __name__ == "__main__":
                 
             extractTrainDataRow(row, X, Y, teamStatsByKey)
             
-    pickle.dump((X, Y), open('../data/train_data.pkl', 'wb'))
+    pickle.dump((X, Y), open('../localdata/train_data.pkl', 'wb'))
             
     

@@ -59,4 +59,4 @@ if __name__ == "__main__":
     for k, v in teamRecsByKey.iteritems():
         teamStatsByKey[k] = np.sum(v, axis=0, dtype=np.float) / len(v)
             
-    pickle.dump(teamStatsByKey, open('../data/teamStatsByKey.pkl', 'wb'))
+    pickle.dump(teamStatsByKey, open('../localdata/teamStatsByKey.pkl', 'wb'))

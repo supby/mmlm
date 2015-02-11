@@ -16,7 +16,7 @@ if __name__ == "__main__":
     
     print 'Load train dataset'
     
-    dataset = pickle.load(open("../data/train_data.pkl", "rb"))
+    dataset = pickle.load(open("../localdata/train_data.pkl", "rb"))
 
     train_data = dataset[0]
     train_target = dataset[1]
@@ -44,4 +44,4 @@ if __name__ == "__main__":
     
     print 'Save model.'    
 #    pickle.dump(clf, open('../data/linsvm_model.pkl', 'wb'))
-    pickle.dump(clf, open('../data/rbfsvm_model.pkl', 'wb'))
+    pickle.dump(clf, open('../localdata/rbfsvm_model.pkl', 'wb'))
