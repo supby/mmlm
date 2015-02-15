@@ -5,13 +5,12 @@
 # and open the template in the editor.
 
 __author__ = "andrej"
-__date__ = "$Feb 15, 2015 9:27:13 PM$"
+__date__ = "$Feb 15, 2015 11:53:58 PM$"
 
 import pickle
-from sklearn import metrics
 from sklearn import cross_validation
-from sklearn.lda import LDA
-from sklearn.qda import QDA
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import AdaBoostClassifier
 
 if __name__ == "__main__":
     print 'Load train dataset.'
@@ -24,9 +23,11 @@ if __name__ == "__main__":
     X_train, X_test, y_train, y_test = \
         cross_validation.train_test_split(train_data, train_target, 
                                           test_size=0.3, random_state=0)
-                                          
-#    clf = LDA()
-    clf = QDA()
+
+#    lr = DecisionTreeClassifier()
+    clf = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1),
+                         algorithm="SAMME",
+                         n_estimators=200)
     
     print 'Train model.'
     
@@ -35,11 +36,7 @@ if __name__ == "__main__":
     print 'Test model.'
     print 'Use cross validation.'
 
-    print clf.score(X_test, y_test)
-    
-    print 'Classification report.'
-    y_predicted = clf.predict(X_test)
-    print(metrics.classification_report(y_test, y_predicted))
+    print clf.score(X_test, y_test)    
     
     print 'Save model.'    
-    pickle.dump(clf, open('../localdata/lda_model.pkl', 'wb'))
+    pickle.dump(clf, open('../localdata/dtree_model.pkl', 'wb'))

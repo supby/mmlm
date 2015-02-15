@@ -21,7 +21,7 @@ if __name__ == "__main__":
         with open('../localdata/submission1.csv', 'w') as outcsv:
             
             teamStatsByKey = pickle.load(open('../localdata/teamStatsByKey.pkl', 'rb'))
-            clf = pickle.load(open('../localdata/lda_model.pkl', 'rb'))
+            clf = pickle.load(open('../localdata/lr_model.pkl', 'rb'))
             
             writer = csv.writer(outcsv)
             firstRow = True
@@ -38,7 +38,7 @@ if __name__ == "__main__":
                 wteam = teamStatsByKey[wkey]
                 lteam = teamStatsByKey[lkey]
                 
-                wdiff = getDif(lteam, wteam)
+                wdiff = getDif(wteam, lteam)
                 p = clf.predict_proba([wdiff + [wdiff[1] * wdiff[2], 
                                       wdiff[3] * wdiff[4], wdiff[5] * wdiff[6], 
                                       wdiff[7] * wdiff[9], wdiff[8] * wdiff[12]]])[0][1]
