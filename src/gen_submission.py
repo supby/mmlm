@@ -7,18 +7,21 @@
 __author__ = "andrej"
 __date__ = "$Feb 7, 2015 11:08:40 PM$"
 
-import pickle
 import csv
+import pickle
+
+def getDif(wteam, lteam):
+    return [wteam[i] - lteam[i] for i in range(len(wteam))]
 
 if __name__ == "__main__":
     
     #load sample submission
     games2predict = []
     with open('../data/sample_submission.csv', 'r') as incsv:
-        with open('../data/submission1.csv', 'w') as outcsv:
+        with open('../localdata/submission1.csv', 'w') as outcsv:
             
-            teamStatsByKey = pickle.load(open('../data/teamStatsByKey.pkl', 'rb'))
-            clf = pickle.load(open('../data/lr_model.pkl', 'rb'))
+            teamStatsByKey = pickle.load(open('../localdata/teamStatsByKey.pkl', 'rb'))
+            clf = pickle.load(open('../localdata/lda_model.pkl', 'rb'))
             
             writer = csv.writer(outcsv)
             firstRow = True
@@ -35,8 +38,10 @@ if __name__ == "__main__":
                 wteam = teamStatsByKey[wkey]
                 lteam = teamStatsByKey[lkey]
                 
-                p = clf.predict_proba([[wteam[i] - lteam[i] 
-                                      for i in range(len(wteam))]])[0][1]
+                wdiff = getDif(lteam, wteam)
+                p = clf.predict_proba([wdiff + [wdiff[1] * wdiff[2], 
+                                      wdiff[3] * wdiff[4], wdiff[5] * wdiff[6], 
+                                      wdiff[7] * wdiff[9], wdiff[8] * wdiff[12]]])[0][1]
                                       
                 writer.writerow(['%s_%s_%s' % (ids[0], wkey, lkey), p])
                 
