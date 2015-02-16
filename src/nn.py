@@ -13,10 +13,10 @@ if __name__ == "__main__":
     dataset = pickle.load(open("../localdata/train_data.pkl", "rb"))
 
     train_data = numpy.mat(dataset[0], numpy.float32)
-    # train_target = numpy.mat([[0,1] if i == 1 else [1,0] for i in dataset[1]], 
-    #                             numpy.float32)
-    train_target = numpy.mat([[1] if i == 1 else [0] for i in dataset[1]], 
-                             numpy.float32)
+    train_target = numpy.mat([[0,1] if i == 1 else [1,0] for i in dataset[1]], 
+                                 numpy.float32)
+#    train_target = numpy.mat([[1] if i == 1 else [0] for i in dataset[1]], 
+#                             numpy.float32)
 
     #Scaling the data
     print 'Scaling the data.'
@@ -33,26 +33,26 @@ if __name__ == "__main__":
                      layers=[# three layers: one hidden layer
                      ('input', layers.InputLayer),
                      ('hidden1', layers.DenseLayer),
-                     ('hidden2', layers.DenseLayer),
-                     ('hidden3', layers.DenseLayer),
-                     ('hidden4', layers.DenseLayer),
+#                     ('hidden2', layers.DenseLayer),
+#                     ('hidden3', layers.DenseLayer),
+#                     ('hidden4', layers.DenseLayer),
                      ('output', layers.DenseLayer),
                      ],
                      # layer parameters:
                      input_shape=(None, len(X_train[0])), # 96x96 input pixels per batch
-                     hidden1_num_units=30, # number of units in hidden layer
-                     hidden2_num_units=50, # number of units in hidden layer
-                     hidden3_num_units=30, # number of units in hidden layer
-                     hidden4_num_units=10, # number of units in hidden layer
-                     output_nonlinearity=None, # output layer uses identity function
-                     output_num_units=1,
+                     hidden1_num_units=300, # number of units in hidden layer
+#                     hidden2_num_units=50, # number of units in hidden layer
+#                     hidden3_num_units=30, # number of units in hidden layer
+#                     hidden4_num_units=10, # number of units in hidden layer
+#                     output_nonlinearity=None, # output layer uses identity function
+                     output_num_units=2,
 
                      # optimization method:
                      regression=True,
                      update=nesterov_momentum,
                      update_learning_rate=0.01,
                      update_momentum=0.9, 
-                     max_epochs=10000,
+                     max_epochs=400,
                      verbose=1,
                      )
     

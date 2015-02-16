@@ -22,13 +22,11 @@ def extractTrainDataRow(row, X, Y, teamStatsByKey):
 
     # negative features row
     wdiff = getDif(lteam, wteam)
-    X.append(wdiff + [wdiff[1]*wdiff[2], wdiff[3]*wdiff[4], wdiff[5]*wdiff[6], 
-            wdiff[7]*wdiff[9], wdiff[8]*wdiff[12]])
+    X.append(wdiff)
     Y.append(0)
     # positive feature row
     ldiff = getDif(wteam, lteam)
-    X.append(ldiff + [ldiff[1]*ldiff[2], ldiff[3]*ldiff[4], ldiff[5]*ldiff[6], 
-            ldiff[7]*ldiff[9], ldiff[8]*ldiff[12]])
+    X.append(ldiff)
     Y.append(1)
     
     print '%s_%s' % (wkey, lkey)
@@ -57,6 +55,6 @@ if __name__ == "__main__":
                 
             extractTrainDataRow(row, X, Y, teamStatsByKey)
             
-    pickle.dump((X, Y), open('../localdata/train_data.pkl', 'wb'))
+    pickle.dump((X, Y), open('../localdata/train_data_0.pkl', 'wb'))
             
     
