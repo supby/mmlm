@@ -26,8 +26,8 @@ if __name__ == "__main__":
 
 #    lr = DecisionTreeClassifier()
     clf = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1),
-                         algorithm="SAMME",
-                         n_estimators=200)
+                         algorithm="SAMME.R",
+                         n_estimators=10000)
     
     print 'Train model.'
     
