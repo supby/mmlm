@@ -7,13 +7,15 @@
 __author__ = "andrej"
 __date__ = "$Feb 7, 2015 12:33:57 AM$"
 
-import pickle
 import csv
+import pickle
 
 def getDif(wteam, lteam):
+    """get diff in fetures for teams"""
     return [wteam[i] - lteam[i] for i in range(len(wteam))]
 
 def extractTrainDataRow(row, X, Y, teamStatsByKey):
+    """extract data row from csv"""
     wkey = int(row[2])
     lkey = int(row[4])
 

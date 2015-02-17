@@ -10,11 +10,11 @@ from sklearn import preprocessing
 if __name__ == "__main__":
     print 'Load train dataset.'
     
-    dataset = pickle.load(open("../localdata/train_data.pkl", "rb"))
+    dataset = pickle.load(open("../localdata/train_data_0.pkl", "rb"))
 
     train_data = numpy.mat(dataset[0], numpy.float32)
-    train_target = numpy.mat([[0,1] if i == 1 else [1,0] for i in dataset[1]], 
-                                 numpy.float32)
+    train_target = numpy.mat([[0, 1] if i == 1 else [1, 0] for i in dataset[1]], 
+                             numpy.float32)
 #    train_target = numpy.mat([[1] if i == 1 else [0] for i in dataset[1]], 
 #                             numpy.float32)
 
@@ -30,21 +30,35 @@ if __name__ == "__main__":
 
     print 'Build NN.'
     net1 = NeuralNet(
-                     layers=[# three layers: one hidden layer
+                     layers=[
                      ('input', layers.InputLayer),
                      ('hidden1', layers.DenseLayer),
-#                     ('hidden2', layers.DenseLayer),
-#                     ('hidden3', layers.DenseLayer),
-#                     ('hidden4', layers.DenseLayer),
+#                     ('dropout1', layers.DropoutLayer),
+                     ('hidden2', layers.DenseLayer),
+#                     ('dropout2', layers.DropoutLayer),
+                     ('hidden3', layers.DenseLayer),
+#                     ('dropout3', layers.DropoutLayer),
+                     ('hidden4', layers.DenseLayer),
+#                     ('dropout4', layers.DropoutLayer),
+                     ('hidden5', layers.DenseLayer),
+                     ('hidden6', layers.DenseLayer),
+                     ('hidden7', layers.DenseLayer),
                      ('output', layers.DenseLayer),
                      ],
                      # layer parameters:
-                     input_shape=(None, len(X_train[0])), # 96x96 input pixels per batch
-                     hidden1_num_units=300, # number of units in hidden layer
-#                     hidden2_num_units=50, # number of units in hidden layer
-#                     hidden3_num_units=30, # number of units in hidden layer
-#                     hidden4_num_units=10, # number of units in hidden layer
-#                     output_nonlinearity=None, # output layer uses identity function
+                     input_shape=(None, len(X_train[0])),
+                     hidden1_num_units=60,
+#                     dropout1_p=0.1,
+                     hidden2_num_units=120,
+#                     dropout2_p=0.2,
+                     hidden3_num_units=240,
+#                     dropout3_p=0.3,
+                     hidden4_num_units=340,
+#                     dropout4_p=0.5,
+                     hidden5_num_units=120,
+                     hidden6_num_units=60,
+                     hidden7_num_units=30,
+                     output_nonlinearity=None,
                      output_num_units=2,
 
                      # optimization method:
@@ -52,7 +66,7 @@ if __name__ == "__main__":
                      update=nesterov_momentum,
                      update_learning_rate=0.01,
                      update_momentum=0.9, 
-                     max_epochs=400,
+                     max_epochs=5000,
                      verbose=1,
                      )
     
