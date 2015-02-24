@@ -11,6 +11,8 @@ import pickle
 from sklearn import metrics
 from sklearn import cross_validation
 from sklearn.linear_model import LogisticRegression
+from sklearn import preprocessing
+import numpy
 
 if __name__ == "__main__":
     print 'Load train dataset.'
@@ -19,6 +21,11 @@ if __name__ == "__main__":
 
     train_data = dataset[0]
     train_target = dataset[1]
+    
+    print 'Scaling the data.'
+    min_max_scaler = preprocessing.MinMaxScaler()
+    train_data = numpy.mat(min_max_scaler.fit_transform(train_data), 
+                           numpy.float32)
 
     X_train, X_test, y_train, y_test = \
         cross_validation.train_test_split(train_data, train_target, 
