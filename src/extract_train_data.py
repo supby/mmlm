@@ -8,7 +8,7 @@ __author__ = "andrej"
 __date__ = "$Feb 7, 2015 12:33:57 AM$"
 
 import csv
-import pickle
+import cPickle as pickle
 
 def getDif(wteam, lteam):
     """get diff in fetures for teams"""
