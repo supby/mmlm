@@ -19,8 +19,8 @@ def extractTrainDataRow(row, X, Y, teamStatsByKey):
     wkey = int(row[2])
     lkey = int(row[4])
 
-    wteam = teamStatsByKey[wkey]
-    lteam = teamStatsByKey[lkey]
+    wteam = teamStatsByKey[(float(row[0]),float(wkey))]
+    lteam = teamStatsByKey[(float(row[0]),float(lkey))]
 
     # negative features row
     wdiff = getDif(lteam, wteam)
@@ -35,7 +35,8 @@ def extractTrainDataRow(row, X, Y, teamStatsByKey):
 
 if __name__ == "__main__":    
     
-    teamStatsByKey = pickle.load(open('../localdata/teamStatsByKey.pkl', 'rb'))
+#    teamStatsByKey = pickle.load(open('../localdata/teamStatsByKey.pkl', 'rb'))
+    ts_by_season_key = pickle.load(open('../localdata/tstat_by_season_key.pkl', 'rb'))
     
     X = []
     Y = []
@@ -46,7 +47,7 @@ if __name__ == "__main__":
                 firstRow = False
                 continue
                 
-            extractTrainDataRow(row, X, Y, teamStatsByKey)
+            extractTrainDataRow(row, X, Y, ts_by_season_key)
             
     with open('../data/tourney_detailed_results.csv', 'r') as tdf:
         firstRow = True
@@ -55,7 +56,7 @@ if __name__ == "__main__":
                 firstRow = False
                 continue
                 
-            extractTrainDataRow(row, X, Y, teamStatsByKey)
+            extractTrainDataRow(row, X, Y, ts_by_season_key)
             
     pickle.dump((X, Y), open('../localdata/train_data_0.pkl', 'wb'))
             

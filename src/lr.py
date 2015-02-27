@@ -11,10 +11,10 @@ import numpy
 #import pickle
 import cPickle as pickle
 from sklearn import cross_validation
-from sklearn import metrics
+#from sklearn import metrics
 from sklearn import preprocessing
-from sklearn.feature_selection import SelectKBest
-from sklearn.feature_selection import SelectPercentile
+#from sklearn.feature_selection import SelectKBest
+#from sklearn.feature_selection import SelectPercentile
 from sklearn.linear_model import LogisticRegression
 
 if __name__ == "__main__":
@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
     X_train, X_test, y_train, y_test = \
         cross_validation.train_test_split(train_data, train_target, 
-                                          test_size=0.3, random_state=0)
+                                          test_size=0.3, random_state=42)
 
     lr = LogisticRegression()
     
@@ -52,9 +52,9 @@ if __name__ == "__main__":
 
     print clf.score(X_test, y_test)
     
-    print 'Classification report.'
-    y_predicted = clf.predict(X_test)
-    print(metrics.classification_report(y_test, y_predicted))
+#    print 'Classification report.'
+#    y_predicted = clf.predict(X_test)
+#    print(metrics.classification_report(y_test, y_predicted))
     
     print 'Save model.'    
     pickle.dump(clf, open('../localdata/lr_model.pkl', 'wb'))

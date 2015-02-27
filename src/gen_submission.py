@@ -22,7 +22,8 @@ if __name__ == "__main__":
     with open('../data/sample_submission.csv', 'r') as incsv:
         with open('../localdata/submission1.csv', 'w') as outcsv:
             
-            teamStatsByKey = pickle.load(open('../localdata/teamStatsByKey.pkl', 'rb'))
+#            teamStatsByKey = pickle.load(open('../localdata/teamStatsByKey.pkl', 'rb'))
+            ts_by_season_key = pickle.load(open('../localdata/tstat_by_season_key.pkl', 'rb'))
             clf = pickle.load(open('../localdata/lr_model.pkl', 'rb'))            
             
             writer = csv.writer(outcsv)
@@ -30,18 +31,22 @@ if __name__ == "__main__":
             writer.writerow(['id', 'pred'])
             
             data_to_predict = []
-            
+            idsl = []
             for row in csv.reader(incsv):
                 if firstRow:
                     firstRow = False
                     continue
-                    
+                
+                idsl.append(row[0])
                 ids = row[0].split('_')
                 wkey = int(ids[1])
                 lkey = int(ids[2])
+                season = ids[0]
                 
-                wteam = teamStatsByKey[wkey]
-                lteam = teamStatsByKey[lkey]
+#                wteam = teamStatsByKey[wkey]
+#                lteam = teamStatsByKey[lkey]
+                wteam = ts_by_season_key[(float(season),float(wkey))]
+                lteam = ts_by_season_key[(float(season),float(lkey))]
                 
                 diff = getDif(wteam, lteam)
                 data_to_predict.append(diff)
@@ -52,9 +57,9 @@ if __name__ == "__main__":
                                             numpy.float32)
                            
             probs = clf.predict_proba(data_to_predict)            
-            for p in probs:                                      
-                writer.writerow(['%s_%s_%s' % (ids[0], wkey, lkey), 
-                                '{:.9f}'.format(p[1])])                
+            for i in range(len(probs)):
+                p = probs[i]
+                writer.writerow([idsl[i], '{:.9f}'.format(p[1])])
                 print '%s_%s_%s => %.9f' % (ids[0], wkey, lkey, p[1])
                 
                 
