@@ -9,8 +9,8 @@ import cPickle as pickle
 import csv
 import itertools
 import numpy as np
-from operator import itemgetter
 from operator import add
+from operator import itemgetter
 
 loc2feature = {'N': 0, 'H': 1, 'A': 2}
 
@@ -57,31 +57,31 @@ def extract_teams_stats(teamRecsByKey, row):
 if __name__ == "__main__":
     # extract stat data for each team
     
-#    team_recs_by_key = {}
-#    data = []
-#    with open('../data/regular_season_detailed_results.csv', 'r') as tdf:
-#        first_row = True
-#        for row in csv.reader(tdf):
-#            if first_row:
-#                first_row = False
-#                continue
-#            
-#            for li in extract_data_rows(row):                
-#                data.append(li)
-##            extract_teams_stats(teamRecsByKey, row)
-#            
-#    with open('../data/tourney_detailed_results.csv', 'r') as tdf:
-#        first_row = True
-#        for row in csv.reader(tdf):
-#            if first_row:
-#                first_row = False
-#                continue
-#                
-#            for li in extract_data_rows(row):                
-#                data.append(li)
-##            extract_teams_stats(teamRecsByKey, row)
-#    
-#    pickle.dump(data, open('../localdata/ts_data.pkl', 'wb'))
+    team_recs_by_key = {}
+    data = []
+    with open('../data/regular_season_detailed_results.csv', 'r') as tdf:
+        first_row = True
+        for row in csv.reader(tdf):
+            if first_row:
+                first_row = False
+                continue
+            
+            for li in extract_data_rows(row):                
+                data.append(li)
+#            extract_teams_stats(teamRecsByKey, row)
+            
+    with open('../data/tourney_detailed_results.csv', 'r') as tdf:
+        first_row = True
+        for row in csv.reader(tdf):
+            if first_row:
+                first_row = False
+                continue
+                
+            for li in extract_data_rows(row):                
+                data.append(li)
+#            extract_teams_stats(teamRecsByKey, row)
+    
+    pickle.dump(data, open('../localdata/ts_data.pkl', 'wb'))
     
     data = pickle.load(open('../localdata/ts_data.pkl', 'rb'))
     
@@ -95,7 +95,7 @@ if __name__ == "__main__":
         l = list(v)
         ln = len(l)
         ts_by_season_key[k] = [float(r) / ln for r in reduce(lambda x1, x2: map(add, x1, x2), 
-                                                [vi[2:] for vi in l])]
+                                                             [vi[2:] for vi in l])]
     
     
     pickle.dump(ts_by_season_key, open('../localdata/tstat_by_season_key.pkl', 'wb'))
