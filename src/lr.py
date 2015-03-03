@@ -20,7 +20,7 @@ from sklearn.linear_model import LogisticRegression
 if __name__ == "__main__":
     print 'Load train dataset.'
     
-    dataset = pickle.load(open("../localdata/train_data_0.pkl", "rb"))
+    dataset = pickle.load(open("../localdata/train_data.pkl", "rb"))
 
     train_data = dataset[0]
     train_target = dataset[1]
@@ -28,7 +28,7 @@ if __name__ == "__main__":
 #    print 'Poly feature.'
 #    train_data = preprocessing.PolynomialFeatures(2).fit_transform(train_data)
     
-    print 'Scaling the data.'
+    print 'Scaling train data.'
     min_max_scaler = preprocessing.MinMaxScaler()
     train_data = numpy.mat(min_max_scaler.fit_transform(train_data), 
                            numpy.float32)
@@ -47,10 +47,22 @@ if __name__ == "__main__":
     
     clf = lr.fit(X_train, y_train)
 
-    print 'Test model.'
-    print 'Use cross validation.'
+    print 'Test model. Use cross validation.'
 
     print clf.score(X_test, y_test)
+    
+    print 'Test model. Use test data.'
+    
+    test_dataset = pickle.load(open("../localdata/test_data.pkl", "rb"))
+
+    test_data = test_dataset[0]
+    test_target = test_dataset[1]
+    
+    print 'Scaling test data.'
+    test_data = numpy.mat(min_max_scaler.fit_transform(test_data), 
+                           numpy.float32)
+                           
+    print clf.score(test_data, test_target)
     
 #    print 'Classification report.'
 #    y_predicted = clf.predict(X_test)

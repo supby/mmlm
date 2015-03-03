@@ -12,7 +12,7 @@ import csv
 from sklearn import preprocessing
 import numpy
 
-def getDif(wteam, lteam):
+def get_dif(wteam, lteam):
     return [wteam[i] - lteam[i] for i in range(len(wteam))]
 
 if __name__ == "__main__":
@@ -20,10 +20,9 @@ if __name__ == "__main__":
     #load sample submission
     games2predict = []
     with open('../data/sample_submission.csv', 'r') as incsv:
-        with open('../localdata/submission1.csv', 'w') as outcsv:
-            
-#            teamStatsByKey = pickle.load(open('../localdata/teamStatsByKey.pkl', 'rb'))
-            ts_by_season_key = pickle.load(open('../localdata/tstat_by_season_key.pkl', 'rb'))
+        with open('../localdata/submission1.csv', 'w') as outcsv:            
+
+            ts_by_season_key = pickle.load(open('../localdata/team_stats.pkl', 'rb'))
             clf = pickle.load(open('../localdata/lr_model.pkl', 'rb'))            
             
             writer = csv.writer(outcsv)
@@ -43,12 +42,10 @@ if __name__ == "__main__":
                 lkey = int(ids[2])
                 season = ids[0]
                 
-#                wteam = teamStatsByKey[wkey]
-#                lteam = teamStatsByKey[lkey]
                 wteam = ts_by_season_key[(float(season),float(wkey))]
                 lteam = ts_by_season_key[(float(season),float(lkey))]
                 
-                diff = getDif(wteam, lteam)
+                diff = get_dif(wteam, lteam)
                 data_to_predict.append(diff)
                 
             print 'Scaling the data.'                

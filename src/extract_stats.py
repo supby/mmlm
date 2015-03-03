@@ -61,21 +61,21 @@ if __name__ == "__main__":
     
     data = pickle.load(open('../localdata/ts_data.pkl', 'rb'))
     
-    print np.shape(data)
+    print 'Agregate.'
     
-    print 'agregate'
+    seasons = [2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014]
     
-    seasons = [2011, 2012, 2013, 2014]
-    gr = itertools.groupby(data, key=itemgetter(0, 1))
     ts_by_season_key = {}
-    for season in seasons:
-        
-        for k, v in gr:
+    for season in seasons:        
+        gr = itertools.groupby([d for d in data if int(d[0]) < season ], 
+                                key=itemgetter(1))
+        for k,v in gr:
+            print "agregate => %s,%s" % (season, k)
             l = list(v)
             ln = len(l)
-            ts_by_season_key[k] = [float(r) / ln for r in reduce(lambda x1, x2: map(add, x1, x2), 
-                                                                 [vi[2:] for vi in l])]
+            ts_by_season_key[(float(season),k)] = [float(r) / ln for r in 
+                    reduce(lambda x1, x2: map(add, x1, x2), 
+                           [vi[2:] for vi in l])]
     
-    
-    pickle.dump(ts_by_season_key, open('../localdata/tstat_by_season_key.pkl', 'wb'))
+    pickle.dump(ts_by_season_key, open('../localdata/team_stats.pkl', 'wb'))
 
