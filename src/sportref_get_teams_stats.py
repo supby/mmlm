@@ -11,7 +11,7 @@ from pyquery import PyQuery as pq
 import cPickle as pickle
 import csv
 
-__GET_STAT_URL_FORMAT = 'http://www.basketball-reference.com/leagues/NBA_{0}.html'
+__GET_STAT_URL_FORMAT = 'http://www.sports-reference.com/cbb/seasons/{0}-advanced-school-stats.html'
 
 __OUT_FILE_PATH_FORMAT = '../data/nhlref/ts_{0}.csv'
 
