@@ -7,13 +7,13 @@
 __author__ = "andrej"
 __date__ = "$Mar 4, 2015 9:42:21 PM$"
 
-from pyquery import PyQuery as pq
 import cPickle as pickle
 import csv
+from pyquery import PyQuery as pq
 
 __GET_STAT_URL_FORMAT = 'http://www.sports-reference.com/cbb/seasons/{0}-advanced-school-stats.html'
 
-__OUT_FILE_PATH_FORMAT = '../data/nhlref/ts_{0}.csv'
+__OUT_FILE_PATH_FORMAT = '../data/cbbref/ts_{0}.csv'
 
 if __name__ == "__main__":
     
@@ -23,18 +23,28 @@ if __name__ == "__main__":
         d = pq(url=__GET_STAT_URL_FORMAT.format(season))
         with open(__OUT_FILE_PATH_FORMAT.format(season), 'w') as outcsv:
             
-            ths = d('table#misc thead tr:eq(1) th')
-            heder_row = [ths[i].text.strip() for i in range(len(ths))]
+            ths = d('table#adv_school_stats thead tr:eq(1) th')
+            heder_row = [ths[i].text.strip() for i in range(len(ths)) 
+                if ths[i].text and ths[i].text.strip()]
             
             writer = csv.writer(outcsv)
-            writer.writerow(','.join(heder_row))
+            writer.writerow(heder_row)
             
-            trs = d('table#misc tbody tr')
-            for tr in trs:
+            trs = d('table#adv_school_stats tbody tr')
+            for i in range(len(trs)):
+                tr = trs[i]
+                if tr.attrib['class']:
+                    continue
+                    
                 tds = pq(tr)('td')
-                print tds[1].text
-                row = [tds[i].text.strip() for i in range(len(tds))]
-                writer.writerow(','.join(row))
+                row = []
+                for j in range(len(tds)):
+                    td = tds[j]
+                    val = pq(td)('a')[0].text if j == 1 else td.text
+                    if val:
+                        row.append(val.strip())
+                
+                writer.writerow(row)
                 
             print 'season => %s' % season
             
