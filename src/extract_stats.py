@@ -8,7 +8,6 @@ __date__ = "$Feb 6, 2015 11:46:06 PM$"
 import cPickle as pickle
 import csv
 import itertools
-import numpy as np
 from operator import add
 from operator import itemgetter
 
@@ -63,11 +62,14 @@ if __name__ == "__main__":
     
     print 'Agregate.'
     
-    seasons = [2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014]
+#    seasons = [2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014]
+    seasons = [2010, 2011, 2012, 2013, 2014]
     
     ts_by_season_key = {}
     for season in seasons:        
-        gr = itertools.groupby([d for d in data if int(d[0]) < season ], 
+#        gr = itertools.groupby([d for d in data if int(d[0]) < season], 
+#                                key=itemgetter(1))
+        gr = itertools.groupby([d for d in data if int(d[0]) == season - 1], 
                                 key=itemgetter(1))
         for k,v in gr:
             print "agregate => %s,%s" % (season, k)
