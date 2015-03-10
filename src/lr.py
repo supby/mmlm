@@ -16,6 +16,12 @@ from sklearn import preprocessing
 #from sklearn.feature_selection import SelectKBest
 #from sklearn.feature_selection import SelectPercentile
 from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.pipeline import make_pipeline
+from sklearn.svm import SVC
+from sklearn.naive_bayes import GaussianNB
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.ensemble import GradientBoostingClassifier
 
 if __name__ == "__main__":
     print 'Load train dataset.'
@@ -40,12 +46,18 @@ if __name__ == "__main__":
     X_train, X_test, y_train, y_test = \
         cross_validation.train_test_split(train_data, train_target, 
                                           test_size=0.3, random_state=42)
-
-    lr = LogisticRegression()
+     
+#    model = make_pipeline(PolynomialFeatures(1), LogisticRegression())
+#    model = LogisticRegression(penalty='l2', C=0.7)
+#    model = SVC()
+#    model = GaussianNB()
+#    model = AdaBoostClassifier(n_estimators=100)
+    model = GradientBoostingClassifier(n_estimators=50, learning_rate=0.6,
+                                        max_depth=2, random_state=0)
     
     print 'Train model.'
     
-    clf = lr.fit(X_train, y_train)
+    clf = model.fit(X_train, y_train)
 
     print 'Test model. Use cross validation.'
 
