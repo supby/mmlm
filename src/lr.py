@@ -47,13 +47,12 @@ if __name__ == "__main__":
         cross_validation.train_test_split(train_data, train_target, 
                                           test_size=0.3, random_state=42)
      
-#    model = make_pipeline(PolynomialFeatures(1), LogisticRegression())
-#    model = LogisticRegression(penalty='l2', C=0.7)
-#    model = SVC()
+
+    model = LogisticRegression(penalty='l2', C=0.7)
 #    model = GaussianNB()
 #    model = AdaBoostClassifier(n_estimators=100)
-    model = GradientBoostingClassifier(n_estimators=50, learning_rate=0.6,
-                                        max_depth=2, random_state=0)
+#    model = GradientBoostingClassifier(n_estimators=50, learning_rate=0.6,
+#                                        max_depth=2, random_state=0)
     
     print 'Train model.'
     
