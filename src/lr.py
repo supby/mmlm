@@ -35,9 +35,14 @@ if __name__ == "__main__":
 #    train_data = preprocessing.PolynomialFeatures(2).fit_transform(train_data)
     
     print 'Scaling train data.'
-    min_max_scaler = preprocessing.MinMaxScaler()
-    train_data = numpy.mat(min_max_scaler.fit_transform(train_data), 
-                           numpy.float32)
+    min_max_scaler = preprocessing.MinMaxScaler()    
+    
+    train_data = numpy.mat(min_max_scaler.fit_transform(train_data), numpy.float32)
+#    train_data = preprocessing.OneHotEncoder().fit_transform(train_data)
+#    train_data = numpy.mat(preprocessing.StandardScaler().fit_transform(train_data), numpy.float32)
+#    train_data = numpy.mat(preprocessing.normalize(train_data, norm='l1'), numpy.float32)
+#    train_data = numpy.mat(preprocessing.scale(train_data), numpy.float32)
+    
 #                           
 #    print 'Feature selection.'
 #    train_data = SelectPercentile(percentile=70).fit_transform(train_data, 
@@ -70,8 +75,13 @@ if __name__ == "__main__":
     test_target = test_dataset[1]
     
     print 'Scaling test data.'
-    test_data = numpy.mat(min_max_scaler.fit_transform(test_data), 
-                           numpy.float32)
+    
+    test_data = numpy.mat(min_max_scaler.fit_transform(test_data), numpy.float32)
+#    test_data = preprocessing.OneHotEncoder().fit_transform(test_data)
+#    test_data = numpy.mat(preprocessing.StandardScaler().fit_transform(test_data), numpy.float32)
+#    test_data = numpy.mat(preprocessing.scale(test_data), numpy.float32)
+#    test_data = numpy.mat(preprocessing.normalize(test_data, norm='l1'), numpy.float32)
+    
                            
     print clf.score(test_data, test_target)
     
