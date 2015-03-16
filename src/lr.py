@@ -48,9 +48,12 @@ if __name__ == "__main__":
 #    train_data = SelectPercentile(percentile=70).fit_transform(train_data, 
 #                                                               train_target)
 
-    X_train, X_test, y_train, y_test = \
-        cross_validation.train_test_split(train_data, train_target, 
-                                          test_size=0.3, random_state=42)
+#    X_train, X_test, y_train, y_test = \
+#        cross_validation.train_test_split(train_data, train_target, 
+#                                          test_size=0.3, random_state=42)
+
+    X_train = train_data
+    y_train = train_target
      
 
     model = LogisticRegression(penalty='l2', C=0.7)
@@ -63,27 +66,27 @@ if __name__ == "__main__":
     
     clf = model.fit(X_train, y_train)
 
-    print 'Test model. Use cross validation.'
-
-    print clf.score(X_test, y_test)
+#    print 'Test model. Use cross validation.'
+#
+#    print clf.score(X_test, y_test)
     
-    print 'Test model. Use test data.'
-    
-    test_dataset = pickle.load(open("../localdata/test_data.pkl", "rb"))
-
-    test_data = test_dataset[0]
-    test_target = test_dataset[1]
-    
-    print 'Scaling test data.'
-    
-    test_data = numpy.mat(min_max_scaler.fit_transform(test_data), numpy.float32)
-#    test_data = preprocessing.OneHotEncoder().fit_transform(test_data)
-#    test_data = numpy.mat(preprocessing.StandardScaler().fit_transform(test_data), numpy.float32)
-#    test_data = numpy.mat(preprocessing.scale(test_data), numpy.float32)
-#    test_data = numpy.mat(preprocessing.normalize(test_data, norm='l1'), numpy.float32)
-    
-                           
-    print clf.score(test_data, test_target)
+#    print 'Test model. Use test data.'
+#    
+#    test_dataset = pickle.load(open("../localdata/test_data.pkl", "rb"))
+#
+#    test_data = test_dataset[0]
+#    test_target = test_dataset[1]
+#    
+#    print 'Scaling test data.'
+#    
+#    test_data = numpy.mat(min_max_scaler.fit_transform(test_data), numpy.float32)
+##    test_data = preprocessing.OneHotEncoder().fit_transform(test_data)
+##    test_data = numpy.mat(preprocessing.StandardScaler().fit_transform(test_data), numpy.float32)
+##    test_data = numpy.mat(preprocessing.scale(test_data), numpy.float32)
+##    test_data = numpy.mat(preprocessing.normalize(test_data, norm='l1'), numpy.float32)
+#    
+#                           
+#    print clf.score(test_data, test_target)
     
 #    print 'Classification report.'
 #    y_predicted = clf.predict(X_test)

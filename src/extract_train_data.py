@@ -62,9 +62,21 @@ if __name__ == "__main__":
                 continue
                 
             extract_train_datarow(row, X, Y, ts_by_season_key, 
-                    start_season=2003, end_season=2014)
-            extract_train_datarow(row, X_test, Y_test, ts_by_season_key, 
-                    start_season=2014)
+                    start_season=2003, end_season=2016)
+#            extract_train_datarow(row, X_test, Y_test, ts_by_season_key, 
+#                    start_season=2014)
+
+    with open('../data/regular_season_detailed_results_2015.csv', 'r') as tdf:
+        firstRow = True
+        for row in csv.reader(tdf):
+            if firstRow:
+                firstRow = False
+                continue
+                
+            extract_train_datarow(row, X, Y, ts_by_season_key, 
+                    start_season=2015, end_season=2016)
+#            extract_train_datarow(row, X_test, Y_test, ts_by_season_key, 
+#                    start_season=2014)
             
     with open('../data/tourney_detailed_results.csv', 'r') as tdf:
         firstRow = True
@@ -74,11 +86,11 @@ if __name__ == "__main__":
                 continue
                 
             extract_train_datarow(row, X, Y, ts_by_season_key, 
-                    start_season=2003, end_season=2014)
-            extract_train_datarow(row, X_test, Y_test, ts_by_season_key, 
-                    start_season=2014)
+                    start_season=2003, end_season=2016)
+#            extract_train_datarow(row, X_test, Y_test, ts_by_season_key, 
+#                    start_season=2014)
             
     pickle.dump((X, Y), open('../localdata/train_data.pkl', 'wb'))
-    pickle.dump((X_test, Y_test), open('../localdata/test_data.pkl', 'wb'))
+#    pickle.dump((X_test, Y_test), open('../localdata/test_data.pkl', 'wb'))
             
     
