@@ -70,14 +70,15 @@ if __name__ == "__main__":
     
     data = pickle.load(open('../localdata/ts_data.pkl', 'rb'))
     
-    print 'Agregate.'
+    print 'Agregate.'    
     
-    seasons = [2003, 2004, 2005, 2006, 2007, 2008, 2009, 
-        2010, 2011, 2012, 2013, 2014, 2015]
-#    seasons = [2010, 2011, 2012, 2013, 2014]
+#    seasons_to_predict = [2003, 2004, 2005, 2006, 2007, 2008, 2009, 
+#        2010, 2011, 2012, 2013, 2014, 2015]
+    seasons_to_predict = [2015]
+#    seasons_to_predict = [2010, 2011, 2012, 2013, 2014]
     
     ts_by_season_key = {}
-    for season in seasons:        
+    for season in seasons_to_predict:        
 #        gr = itertools.groupby([d for d in data if int(d[0]) < season], 
 #                                key=itemgetter(1))
         gr = itertools.groupby([d for d in data if int(d[0]) == season - 1], 

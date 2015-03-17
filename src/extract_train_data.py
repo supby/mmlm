@@ -14,8 +14,8 @@ def get_dif(wteam, lteam):
     """get diff in fetures for teams"""
     return [wteam[i] - lteam[i] for i in range(len(wteam))]
 
-def extract_train_datarow(row, X, Y, 
-                team_stats, start_season=None, end_season=None):
+def extract_train_datarow(row, X, Y, team_stats, start_season=None, 
+                end_season=None, force_season=None):
     """extract data row from csv"""
     season = int(row[0])
     
@@ -28,12 +28,16 @@ def extract_train_datarow(row, X, Y,
     wkey = int(row[2])
     lkey = int(row[4])
 
-    if not team_stats.get((float(row[0]),float(wkey)), None) or \
-        not team_stats.get((float(row[0]),float(lkey)), None):
+    season_key = float(row[0])
+    if force_season:
+        season_key = float(force_season)
+        
+    if not team_stats.get((season_key,float(wkey)), None) or \
+        not team_stats.get((season_key,float(lkey)), None):
             return
         
-    wteam = team_stats[(float(row[0]),float(wkey))]
-    lteam = team_stats[(float(row[0]),float(lkey))]
+    wteam = team_stats[(season_key,float(wkey))]
+    lteam = team_stats[(season_key,float(lkey))]
 
     # negative features row
     wdiff = get_dif(lteam, wteam)
@@ -62,21 +66,7 @@ if __name__ == "__main__":
                 continue
                 
             extract_train_datarow(row, X, Y, ts_by_season_key, 
-                    start_season=2003, end_season=2016)
-#            extract_train_datarow(row, X_test, Y_test, ts_by_season_key, 
-#                    start_season=2014)
-
-    with open('../data/regular_season_detailed_results_2015.csv', 'r') as tdf:
-        firstRow = True
-        for row in csv.reader(tdf):
-            if firstRow:
-                firstRow = False
-                continue
-                
-            extract_train_datarow(row, X, Y, ts_by_season_key, 
-                    start_season=2015, end_season=2016)
-#            extract_train_datarow(row, X_test, Y_test, ts_by_season_key, 
-#                    start_season=2014)
+                    start_season=2003, end_season=2015, force_season=2015)
             
     with open('../data/tourney_detailed_results.csv', 'r') as tdf:
         firstRow = True
@@ -86,11 +76,19 @@ if __name__ == "__main__":
                 continue
                 
             extract_train_datarow(row, X, Y, ts_by_season_key, 
-                    start_season=2003, end_season=2016)
+                    start_season=2003, end_season=2015, force_season=2015)
+
+    with open('../data/regular_season_detailed_results_2015.csv', 'r') as tdf:
+        firstRow = True
+        for row in csv.reader(tdf):
+            if firstRow:
+                firstRow = False
+                continue
+                
+            extract_train_datarow(row, X, Y, ts_by_season_key, 
+                    start_season=2015, end_season=2016, force_season=2015)
 #            extract_train_datarow(row, X_test, Y_test, ts_by_season_key, 
-#                    start_season=2014)
+#                    start_season=2015, force_season=2015)
             
     pickle.dump((X, Y), open('../localdata/train_data.pkl', 'wb'))
-#    pickle.dump((X_test, Y_test), open('../localdata/test_data.pkl', 'wb'))
-            
-    
+    pickle.dump((X_test, Y_test), open('../localdata/test_data.pkl', 'wb'))

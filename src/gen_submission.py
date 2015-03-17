@@ -20,7 +20,7 @@ if __name__ == "__main__":
     #load sample submission
     games2predict = []
     with open('../data/sample_submission_2015.csv', 'r') as incsv:
-        with open('../localdata/submission1.csv', 'w') as outcsv:            
+        with open('../localdata/submission_2015.csv', 'w') as outcsv:            
 
             ts_by_season_key = pickle.load(open('../localdata/team_stats.pkl', 'rb'))
             clf = pickle.load(open('../localdata/lr_model.pkl', 'rb'))            

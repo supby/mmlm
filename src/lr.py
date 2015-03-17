@@ -70,27 +70,29 @@ if __name__ == "__main__":
 #
 #    print clf.score(X_test, y_test)
     
-#    print 'Test model. Use test data.'
-#    
-#    test_dataset = pickle.load(open("../localdata/test_data.pkl", "rb"))
-#
-#    test_data = test_dataset[0]
-#    test_target = test_dataset[1]
-#    
-#    print 'Scaling test data.'
-#    
-#    test_data = numpy.mat(min_max_scaler.fit_transform(test_data), numpy.float32)
-##    test_data = preprocessing.OneHotEncoder().fit_transform(test_data)
-##    test_data = numpy.mat(preprocessing.StandardScaler().fit_transform(test_data), numpy.float32)
-##    test_data = numpy.mat(preprocessing.scale(test_data), numpy.float32)
-##    test_data = numpy.mat(preprocessing.normalize(test_data, norm='l1'), numpy.float32)
-#    
-#                           
-#    print clf.score(test_data, test_target)
+    print 'Test model. Use test data.'
     
-#    print 'Classification report.'
-#    y_predicted = clf.predict(X_test)
-#    print(metrics.classification_report(y_test, y_predicted))
+    test_dataset = pickle.load(open("../localdata/test_data.pkl", "rb"))
+
+    test_data = test_dataset[0]
+    test_target = test_dataset[1]
+    
+    if test_data:
+        print 'Scaling test data.'
+
+        test_data = numpy.mat(min_max_scaler.fit_transform(test_data), numpy.float32)
+    #    test_data = preprocessing.OneHotEncoder().fit_transform(test_data)
+    #    test_data = numpy.mat(preprocessing.StandardScaler().fit_transform(test_data), numpy.float32)
+    #    test_data = numpy.mat(preprocessing.scale(test_data), numpy.float32)
+    #    test_data = numpy.mat(preprocessing.normalize(test_data, norm='l1'), numpy.float32)
+
+        print clf.score(test_data, test_target)
+        
+    #    print 'Classification report.'
+    #    y_predicted = clf.predict(X_test)
+    #    print(metrics.classification_report(y_test, y_predicted))
+    else:
+        print 'Test data is empty.'
     
     print 'Save model.'    
     pickle.dump(clf, open('../localdata/lr_model.pkl', 'wb'))
